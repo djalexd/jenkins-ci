@@ -1,0 +1,40 @@
+{
+  "variables": {
+    "BUILD_BREAKER_PLUGIN_VERSION": "1.1",
+    "CLOVER_PLUGIN_VERSION": "3.0"
+  },
+  "builders": [
+    {
+      "type": "docker",
+      "image": "sonarqube",
+      "commit": "true",
+      "run_command": [
+        "-d", "-p", "9000:9000", "sonarqube"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "cd /opt/sonarqube/extensions/plugins",
+        "curl -sLo sonar-build-breaker-plugin-{{user `BUILD_BREAKER_PLUGIN_VERSION`}}.jar http://repo1.maven.org/maven2/org/codehaus/sonar-plugins/sonar-build-breaker-plugin/{{user `BUILD_BREAKER_PLUGIN_VERSION`}}/sonar-build-breaker-plugin-{{user `BUILD_BREAKER_PLUGIN_VERSION`}}.jar"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "cd /opt/sonarqube/extensions/plugins/",
+        "curl -sLo sonar-clover-plugin-{{user `CLOVER_PLUGIN_VERSION`}}.jar http://repo1.maven.org/maven2/org/codehaus/sonar-plugins/sonar-clover-plugin/{{user `CLOVER_PLUGIN_VERSION`}}/sonar-clover-plugin-{{user `CLOVER_PLUGIN_VERSION`}}.jar"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "docker-tag",
+      "repository": "djalexd/sonar",
+      "tag": "0.1",
+      "force": true
+    }
+  ]
+}  

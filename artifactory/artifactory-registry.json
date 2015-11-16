@@ -1,0 +1,23 @@
+{
+  "variables": {
+
+  },
+  "builders": [
+    {
+      "type": "docker",
+      "image": "jfrog-docker-registry.bintray.io/jfrog/artifactory-oss",
+      "commit": "true",
+      "run_command": [
+        "-d", "artifactory-registry-oss", "-p", "8081:8081"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "docker-tag",
+      "repository": "djalexd/artifactory-oss",
+      "tag": "0.1",
+      "force": true
+    }
+  ]
+}

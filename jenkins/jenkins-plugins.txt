@@ -1,0 +1,14 @@
+# Ignore this line
+job-dsl:1.35
+promoted-builds:2.21
+jobtemplates:1.0
+git-client
+scm-api
+git
+swarm
+parameterized-trigger:2.27
+sonar:2.2.1
+
+# Google Login Plugin	 Pending
+# OAuth Credentials plugin	 Pending
+# Google OAuth Credentials plugin	 Pending

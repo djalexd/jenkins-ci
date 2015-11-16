@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>job_base_name</name>
+          <description>Base name of this job, e.g. project name</description>
+          <defaultValue></defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>git_scm_url</name>
+          <description>Git SCM URL of this job</description>
+          <defaultValue></defaultValue>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <javaposse.jobdsl.plugin.ExecuteDslScripts plugin="job-dsl@1.35">
+      <scriptText>job(&quot;${job_base_name} Branch Auto-Configurer&quot;) {
+  
+  /* Do it every 5 minutes */
+  triggers {
+  	cron(&quot;*/5 * * * *&quot;)
+  }
+  
+  /* Call another build (dsl_prototype.xml) with these parameters */
+  steps {
+    downstreamParameterized {
+      
+      trigger(&apos;dsl_prototype.xml&apos;, &apos;ALWAYS&apos;, true,
+                    [buildStepFailure: &apos;FAILURE&apos;,
+                     failure         : &apos;FAILURE&apos;,
+                     unstable        : &apos;UNSTABLE&apos;]) {
+                predefinedProp(&apos;git_scm_url&apos;, &quot;${git_scm_url}&quot;)
+                predefinedProp(&apos;job_base_name&apos;, &quot;${job_base_name}&quot;)
+            }
+    }
+  }
+}</scriptText>
+      <usingScriptText>true</usingScriptText>
+      <ignoreExisting>false</ignoreExisting>
+      <removedJobAction>DISABLE</removedJobAction>
+      <removedViewAction>DELETE</removedViewAction>
+      <lookupStrategy>JENKINS_ROOT</lookupStrategy>
+      <additionalClasspath></additionalClasspath>
+    </javaposse.jobdsl.plugin.ExecuteDslScripts>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>

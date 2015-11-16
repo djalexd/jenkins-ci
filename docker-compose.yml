@@ -1,0 +1,45 @@
+
+db:
+  image: mysql
+  env_file:
+    - ./docker-ci.properties
+  ports:
+    - "3306:3306"
+  volumes:
+    - "./data/mysql:/var/lib/mysql"
+
+sonar:
+  image: "djalexd/sonar:0.1"
+  ports:
+    - "9000:9000"
+  links:
+    - db:mysql_sonar_db
+  env_file:
+    - ./docker-ci.properties
+  volumes:
+    - "./data/sonar-data:/opt/sonarqube/data"
+    - "./data/sonar-extensions:/opt/sonarqube/extensions"
+
+jenkins:
+  image: "djalexd/jenkins:0.1"
+  ports:
+    - "8080:8080"
+  links:
+    - db:mysql_sonar_db
+    - sonar
+  env_file:
+    - ./docker-ci.properties
+  #volumes:
+  #  - "./data/jenkins:/var/jenkins_home"
+  environment:
+
+jenkins_slave:
+  image: "andrewgortonuk/dockerjenkinswithgitbuildagent"
+  links:
+    - jenkins
+  environment:
+    - "JENKINS_USERNAME=admin@payu.ro"
+    - "JENKINS_PASSWORD=12345"
+    - "JENKINS_MASTER=http://jenkins:8080"
+  volumes:
+    - "./data/jenkins-slave:/var/local/maestro-agent/workspace/"

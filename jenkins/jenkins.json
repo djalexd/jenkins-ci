@@ -1,0 +1,79 @@
+{
+	"variables": {
+
+	},
+
+	"builders": [
+		{
+			"type": "docker",
+			"image": "jenkins",
+			"commit": true,
+			"run_command": [
+				"-d", "-p", "8888:8080", "-p", "50000:50000", "jenkins"
+			]
+		}
+	],
+
+	"provisioners": [
+		{
+			"type": "file",
+			"source": "jenkins-plugins.txt",
+			"destination": "/usr/share/jenkins/ref/plugins.txt"
+		},
+
+		{
+			"type": "shell",
+			"inline": ["/usr/local/bin/plugins.sh /usr/share/jenkins/ref/plugins.txt"]
+		},
+
+		{
+			"type": "file",
+			"source": "users.groovy",
+			"destination": "/usr/share/jenkins/ref/init.groovy.d/users.groovy"
+		},
+
+		{
+			"type": "shell",
+			"inline": ["/bin/mkdir -p /usr/share/jenkins/ref/default-jobs"]
+		},
+
+		{
+			"type": "file",
+			"source": "default-jobs/",
+			"destination": "/usr/share/jenkins/ref/default-jobs"
+		},
+
+		{
+			"type": "file",
+			"source": "add-default-jobs.groovy",
+			"destination": "/usr/share/jenkins/ref/init.groovy.d/add-default-jobs.groovy"
+		},
+
+		{
+			"type": "file",
+			"source": "sonar.properties",
+			"destination": "/usr/share/jenkins/ref/sonar.properties"
+		},
+
+		{
+			"type": "file",
+			"source": "sonar.groovy",
+			"destination": "/usr/share/jenkins/ref/init.groovy.d/sonar.groovy"
+		},
+
+		{
+			"type": "file",
+			"source": "disable-master-executors.groovy",
+			"destination": "/usr/share/jenkins/ref/init.groovy.d/disable-master-executors.groovy"
+		}
+	],
+
+    "post-processors": [
+      {
+        "type": "docker-tag",
+        "repository": "djalexd/jenkins",
+        "tag": "0.1",
+        "force": true
+      }
+    ]
+}
