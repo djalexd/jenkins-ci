@@ -1,13 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description></description>
+  <description>Project branch auto-configurer</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
-          <name>job_base_name</name>
+          <name>project</name>
           <description>Base name of this job, e.g. project name</description>
           <defaultValue></defaultValue>
         </hudson.model.StringParameterDefinition>
@@ -19,7 +19,28 @@
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
   </properties>
-  <scm class="hudson.scm.NullSCM"/>
+    <scm class="hudson.plugins.git.GitSCM" plugin="git@2.4.0">
+        <configVersion>2</configVersion>
+        <userRemoteConfigs>
+            <hudson.plugins.git.UserRemoteConfig>
+                <url>git@github.com:djalexd/jenkins-job-templates.git</url>
+                <credentialsId>2c1fa93e-c1fd-407c-b771-aa724d20ffa6</credentialsId>
+            </hudson.plugins.git.UserRemoteConfig>
+        </userRemoteConfigs>
+        <branches>
+            <hudson.plugins.git.BranchSpec>
+                <name>*/master</name>
+            </hudson.plugins.git.BranchSpec>
+        </branches>
+        <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+        <submoduleCfg class="list"/>
+        <extensions>
+            <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+            <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
+                <relativeTargetDir>jenkins-job-templates</relativeTargetDir>
+            </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
+        </extensions>
+    </scm>
   <canRoam>true</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -28,28 +49,8 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <javaposse.jobdsl.plugin.ExecuteDslScripts plugin="job-dsl@1.35">
-      <scriptText>job(&quot;${job_base_name} Branch Auto-Configurer&quot;) {
-  
-  /* Do it every 5 minutes */
-  triggers {
-  	cron(&quot;*/5 * * * *&quot;)
-  }
-  
-  /* Call another build (dsl_prototype.xml) with these parameters */
-  steps {
-    downstreamParameterized {
-      
-      trigger(&apos;dsl_prototype.xml&apos;, &apos;ALWAYS&apos;, true,
-                    [buildStepFailure: &apos;FAILURE&apos;,
-                     failure         : &apos;FAILURE&apos;,
-                     unstable        : &apos;UNSTABLE&apos;]) {
-                predefinedProp(&apos;git_scm_url&apos;, &quot;${git_scm_url}&quot;)
-                predefinedProp(&apos;job_base_name&apos;, &quot;${job_base_name}&quot;)
-            }
-    }
-  }
-}</scriptText>
-      <usingScriptText>true</usingScriptText>
+      <targets>jenkins-job-templates/branch-auto-configurer.groovy</targets>
+      <usingScriptText>false</usingScriptText>
       <ignoreExisting>false</ignoreExisting>
       <removedJobAction>DISABLE</removedJobAction>
       <removedViewAction>DELETE</removedViewAction>

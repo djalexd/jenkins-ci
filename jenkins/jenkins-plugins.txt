@@ -8,7 +8,39 @@ git
 swarm
 parameterized-trigger:2.27
 sonar:2.2.1
+cloudbees-folder
+build-flow-plugin
+buildgraph-view
 
 # Google Login Plugin	 Pending
 # OAuth Credentials plugin	 Pending
 # Google OAuth Credentials plugin	 Pending
+
+# build flow plugin (This plugin allows managing Jenkins jobs orchestration using a dedicated DSL, extracting the flow logic from jobs.)
+# el oyente plugin (This plug-in adds job triggering based on XMPP Pub/Sub events.)
+# git changelog plugin ( Extracts a changelog out of commit messages between two GIT revisions, the latest release tags are searched automatically. This changelog can be postprocessed and converted to either an human readable git changelog listing all commits, or a JIRA filter URL.)
+# Git Parameter Plugin — This plugin allows you to choose between Git tags or sha1 of your SCM repository so Git Plugin installed is required.
+# Feature Branch Notifier Plugin — Feature Branch Notifier is an alternative solution to launching builds dynamically on different branches. Instead of cloning projects and configuring them to work on different branches, one job's builds will run on branches that have updates.
+# GitHub pull request builder plugin — This plugin builds pull requests in github and report results.
+# NodeLabel Parameter Plugin — This plugin adds two new parameter types to job configuration - node and label, this allows to dynamically select the node where a job/project should be executed.
+# Ansible Plugin — This plugin allows to execute Ansible tasks as a job build step.
+# Build Pipeline Plugin — This plugin provides a Build Pipeline View of upstream and downstream connected jobs that typically form a build pipeline.  In addition, it offers the ability to define manual triggers for jobs that require intervention prior to execution, e.g. an approval process outside of Jenkins.
+# Copy Artifact Plugin — Adds a build step to copy artifacts from another project.
+# Docker build step plugin — This plugin allows to add various Docker commands into your job as a build step
+# EnvInject Plugin — This plugin makes it possible to have an isolated environment for your jobs.
+# Groovy plugin — This plugin adds the ability to directly execute Groovy code.
+# Logstash Query Plugin — Fails a build based on a logstash query
+# sbt plugin — This plugin allows building Scala projects using sbt.
+# Build Name Setter Plugin — This plugin sets the display name of a build to something other than #1, #2, #3, ...
+# Go Plugin — Automatically installs and sets up the Go programming language (golang) tools for a build.
+# Logstash Plugin — This plugin pushes logs and build data to a Logstash indexer such as Redis or RabbitMQ.
+# M2 Release Plugin — This plugin allows you to perform a release build using the maven-release-plugin from within Jenkins
+# Mesos Plugin — {color:#333333}The {color}mesos-jenkins{color:#333333} plugin allows Jenkins to dynamically launch Jenkins slaves on a Mesos cluster depending on the workload!{color}
+# Checkstyle Plugin — This plugin generates the trend report for Checkstyle, an open source static code analysis program.
+# JaCoCo Plugin — This plugin allows you to capture code coverage report from JaCoCo. Jenkins will generate the trend report of coverage.
+# JUnit Plugin — Allows JUnit-format test results to be published.
+# PMD Plugin — This plugin generates the trend report for PMD, an open source static code analysis program.
+
+
+
+

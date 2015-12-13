@@ -31,7 +31,7 @@ jenkins:
     - ./docker-ci.properties
   #volumes:
   #  - "./data/jenkins:/var/jenkins_home"
-  environment:
+  #environment:
 
 jenkins_slave:
   image: "andrewgortonuk/dockerjenkinswithgitbuildagent"
@@ -43,3 +43,10 @@ jenkins_slave:
     - "JENKINS_MASTER=http://jenkins:8080"
   volumes:
     - "./data/jenkins-slave:/var/local/maestro-agent/workspace/"
+
+artifactory:
+  image: "djalexd/artifactory-oss:0.1"
+  ports:
+    - "8081:8081"
+  env_file:
+    - ./docker-ci.properties

@@ -1,0 +1,11 @@
+# Global configuration options for jenkins instance.
+config:
+  # If sonar is enabled, a runner is configured. Requires
+  # a running instance of Sonar.
+  sonar: enabled
+  # Master configuration.
+  master:
+    # If true, all executors on master are disabled (now the Jenkins
+    # master is completely dependent on slaves to complete jobs)
+    disableExecutors: true
+

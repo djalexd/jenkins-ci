@@ -1,13 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description></description>
+  <description>Pipeline factory</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
-          <name>job_base_name</name>
+          <name>project</name>
           <description>Base name of this job, e.g. project name</description>
           <defaultValue></defaultValue>
         </hudson.model.StringParameterDefinition>
@@ -19,7 +19,28 @@
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
   </properties>
-  <scm class="hudson.scm.NullSCM"/>
+    <scm class="hudson.plugins.git.GitSCM" plugin="git@2.4.0">
+        <configVersion>2</configVersion>
+        <userRemoteConfigs>
+            <hudson.plugins.git.UserRemoteConfig>
+                <url>git@github.com:djalexd/jenkins-job-templates.git</url>
+                <credentialsId>2c1fa93e-c1fd-407c-b771-aa724d20ffa6</credentialsId>
+            </hudson.plugins.git.UserRemoteConfig>
+        </userRemoteConfigs>
+        <branches>
+            <hudson.plugins.git.BranchSpec>
+                <name>*/master</name>
+            </hudson.plugins.git.BranchSpec>
+        </branches>
+        <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+        <submoduleCfg class="list"/>
+        <extensions>
+            <hudson.plugins.git.extensions.impl.CleanBeforeCheckout/>
+            <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
+                <relativeTargetDir>jenkins-job-templates</relativeTargetDir>
+            </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
+        </extensions>
+    </scm>
   <canRoam>true</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -28,50 +49,8 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <javaposse.jobdsl.plugin.ExecuteDslScripts plugin="job-dsl@1.35">
-      <scriptText>def guessProjectName(gitUrl) {
-  def index1 = gitUrl.indexOf(&quot;github.com&quot;)
-  if (index1 &lt; 0) {
-    throw new IllegalArgumentException(gitUrl + &quot; not recognized&quot;);
-  } else {
-    def subString1 = gitUrl.substring(index1 + &quot;github.com&quot;.length() + 1);
-    subString1.substring(0, subString1.length() - 4);
-  }
-}
-
-def project = guessProjectName(&quot;${git_scm_url}&quot;)
-def branchApi = new URL(&quot;https://api.github.com/repos/${project}/branches&quot;)
-def branches = new groovy.json.JsonSlurper().parse(branchApi.newReader())
-branches.each {
-    def branchName = it.name
-    def jobName = &quot;${job_base_name} - Unit Tests - ${branchName}&quot;.replaceAll(&apos;/&apos;,&apos;-&apos;)
-    job(jobName) {
-
-        label(&quot;swarm&quot;)
-
-        scm {
-          
-          git {
-            
-            remote {
-              url &quot;${git_scm_url}&quot;
-            }
-
-            branch branchName
-            
-            createTag false
-            clean true
-            
-          }
-        }
-        triggers {
-          scm(&apos;*/5 * * * *&apos;)
-        }
-        steps {
-            maven(&quot;clean test&quot;)
-        }
-    }
-}</scriptText>
-      <usingScriptText>true</usingScriptText>
+      <targets>jenkins-job-templates/pipeline-factory.groovy</targets>
+      <usingScriptText>false</usingScriptText>
       <ignoreExisting>true</ignoreExisting>
       <removedJobAction>DISABLE</removedJobAction>
       <removedViewAction>DELETE</removedViewAction>

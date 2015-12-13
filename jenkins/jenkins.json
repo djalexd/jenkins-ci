@@ -9,7 +9,7 @@
 			"image": "jenkins",
 			"commit": true,
 			"run_command": [
-				"-d", "-p", "8888:8080", "-p", "50000:50000", "jenkins"
+				"-d", "-p", "8888:8080", "-p", "50000:50000", "-t", "jenkins"
 			]
 		}
 	],
