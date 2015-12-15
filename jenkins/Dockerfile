@@ -65,7 +65,9 @@ RUN mkdir -p $JENKINS_REF/default-jobs
 
 ADD jenkins-plugins.txt $JENKINS_REF/
 
-ADD users.groovy $JENKINS_INITD/
+# Don't configure users for now, will be added later (TODO)
+#ADD users.groovy $JENKINS_INITD/
+
 ADD sonar.groovy $JENKINS_INITD/
 ADD add-default-jobs.groovy $JENKINS_INITD/
 #ADD disable-master-executors.groovy $JENKINS_INITD/
@@ -81,16 +83,12 @@ ADD sonar.properties $JENKINS_REF/sonar.properties
 RUN /usr/local/bin/plugins.sh $JENKINS_REF/jenkins-plugins.txt
 
 # ssh configuration
-RUN mkdir -p $JENKINS_TEMP/.ssh
-ADD config/.ssh/jenkins-ci-templates $JENKINS_TEMP/.ssh/
-ADD config/.ssh/jenkins-ci-templates.pub $JENKINS_TEMP/.ssh/
+ADD config/.ssh $JENKINS_TEMP/.ssh
 
 # Shared folder, we cannot modify permissions.
 USER root
-RUN chown jenkins $JENKINS_TEMP/.ssh/jenkins-ci-templates
-RUN chown jenkins $JENKINS_TEMP/.ssh/jenkins-ci-templates.pub
-
-RUN chmod 500 $JENKINS_TEMP/.ssh/jenkins-ci-templates
+RUN chown -R jenkins $JENKINS_TEMP/.ssh
+RUN chmod 500 $JENKINS_TEMP/.ssh/jenkins-ci
 USER jenkins
 
 ADD config/credentials.xml.tpl $JENKINS_TEMP/credentials.xml
