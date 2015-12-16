@@ -19,7 +19,7 @@ job("branch-auto-configurer") {
 	}
 	steps {
 		dsl {
-			text(readFileFromWorkspace('jenkins-job-templates/branch-auto-configurer.groovy'))
+			external('jenkins-job-templates/branch-auto-configurer.groovy')
 			removeAction('DISABLE')
 			ignoreExisting()
 		}
@@ -46,7 +46,7 @@ job("default-java-pipeline-factory") {
 	}
 	steps {
 		dsl {
-			text(readFileFromWorkspace('jenkins-job-templates/pipeline-factory.groovy'))
+			external('jenkins-job-templates/pipeline-factory.groovy')
 			removeAction('DISABLE')
 			ignoreExisting()
 		}
@@ -71,7 +71,7 @@ job("pipeline-generator") {
 	}
 	steps {
 		dsl {
-			text(readFileFromWorkspace('jenkins-job-templates/pipeline-generator.groovy'))
+			external('jenkins-job-templates/pipeline-generator.groovy')
 			removeAction('DISABLE')
 			ignoreExisting()
 		}

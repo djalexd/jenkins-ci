@@ -18,7 +18,7 @@ def pattern = 'default-jobs/**/*.groovy'
 def project = new FreeStyleProject(Jenkins.getInstance(), "Seed job")
 def build = new FreeStyleBuild(project)
 
-def TaskListener taskListener = new LogTaskListener(
+def TaskListener taskListener = new hudson.util.LogTaskListener(
 		Logger.getLogger("add-default-jobs"),
 		java.util.logging.Level.INFO)
 
