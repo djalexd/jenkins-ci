@@ -11,6 +11,11 @@ sonar:2.2.1
 cloudbees-folder
 build-flow-plugin
 buildgraph-view
+delivery-pipeline-plugin
+build-pipeline-plugin
+analysis-core
+jquery:1.7.2-1
+token-macro:1.9
 
 # Google Login Plugin	 Pending
 # OAuth Credentials plugin	 Pending
