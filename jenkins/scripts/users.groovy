@@ -28,20 +28,21 @@ def addUser(fullName, email, password, keys) {
 
 def instance = Jenkins.getInstance()
 
-def hudsonRealm = new HudsonPrivateSecurityRealm(false)
+/* Don't configure users for now, will be added later (TODO)*/
+
+/*def hudsonRealm = new HudsonPrivateSecurityRealm(false)
 instance.setSecurityRealm(hudsonRealm)
-
 addUser("Admin", "admin@payu.ro", "12345", null)
-//addUser("JohnDoe", "john.doe@payu.ro", "12345", null)
+addUser("JohnDoe", "john.doe@payu.ro", "12345", null)
 
-/*def strategy = new GlobalMatrixAuthorizationStrategy()
+def strategy = new GlobalMatrixAuthorizationStrategy()
 strategy.add(Jenkins.ADMINISTER, "admin")
 strategy.add(Jenkins.READ, "admin")
 strategy.add(Jenkins.RUN_SCRIPTS, "admin")
 strategy.add(Jenkins.READ, "JohnDoe")
-instance.setAuthorizationStrategy(strategy)*/
+instance.setAuthorizationStrategy(strategy)
 
 def strategy = new FullControlOnceLoggedInAuthorizationStrategy()
-instance.setAuthorizationStrategy(strategy)
+instance.setAuthorizationStrategy(strategy)*/
 
 instance.save()

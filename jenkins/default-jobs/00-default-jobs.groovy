@@ -14,12 +14,11 @@ job("branch-auto-configurer") {
 				credentials('2c1fa93e-c1fd-407c-b771-aa724d20ffa6')
 			}
 			clean()
-			relativeTargetDir('jenkins-job-templates')
 		}
 	}
 	steps {
 		dsl {
-			external('jenkins-job-templates/branch-auto-configurer.groovy')
+			external('branch-auto-configurer.groovy')
 			removeAction('DISABLE')
 			ignoreExisting()
 		}
@@ -41,12 +40,11 @@ job("default-java-pipeline-factory") {
 				credentials('2c1fa93e-c1fd-407c-b771-aa724d20ffa6')
 			}
 			clean()
-			relativeTargetDir('jenkins-job-templates')
 		}
 	}
 	steps {
 		dsl {
-			external('jenkins-job-templates/pipeline-factory.groovy')
+			external('pipeline-factory.groovy')
 			removeAction('DISABLE')
 			ignoreExisting()
 		}
@@ -66,12 +64,11 @@ job("pipeline-generator") {
 				credentials('2c1fa93e-c1fd-407c-b771-aa724d20ffa6')
 			}
 			clean()
-			relativeTargetDir('jenkins-job-templates')
 		}
 	}
 	steps {
 		dsl {
-			external('jenkins-job-templates/pipeline-generator.groovy')
+			external('pipeline-generator.groovy')
 			removeAction('DISABLE')
 			ignoreExisting()
 		}

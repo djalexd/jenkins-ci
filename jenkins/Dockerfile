@@ -25,8 +25,6 @@ ENV TINI_SHA 066ad710107dc7ee05d3aa6e4974f01dc98f3888
 RUN curl -fL https://github.com/krallin/tini/releases/download/v0.5.0/tini-static -o /bin/tini && chmod +x /bin/tini \
   && echo "$TINI_SHA /bin/tini" | sha1sum -c -
 
-COPY init.groovy /usr/share/jenkins/ref/init.groovy.d/tcp-slave-agent-port.groovy
-
 ENV JENKINS_VERSION 1.625.2
 ENV JENKINS_SHA 395fe6975cf75d93d9fafdafe96d9aab1996233b
 
@@ -49,9 +47,6 @@ ENV COPY_REFERENCE_FILE_LOG $JENKINS_HOME/copy_reference_file.log
 USER jenkins
 
 COPY jenkins.sh /usr/local/bin/jenkins.sh
-# Entrypoint was added at the end of file, this one is
-# no longer necessary.
-# ENTRYPOINT ["/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
 
 # from a derived Dockerfile, can use `RUN plugins.sh active.txt` to setup /usr/share/jenkins/ref/plugins from a support bundle
 COPY plugins.sh /usr/local/bin/plugins.sh
@@ -64,13 +59,6 @@ ENV JENKINS_INITD $JENKINS_REF/init.groovy.d
 RUN mkdir -p $JENKINS_REF/default-jobs
 
 ADD jenkins-plugins.txt $JENKINS_REF/
-
-# Don't configure users for now, will be added later (TODO)
-#ADD users.groovy $JENKINS_INITD/
-
-ADD sonar.groovy $JENKINS_INITD/
-ADD add-default-jobs.groovy $JENKINS_INITD/
-#ADD disable-master-executors.groovy $JENKINS_INITD/
 
 ADD default-jobs $JENKINS_REF/default-jobs/
 

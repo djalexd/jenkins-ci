@@ -3,13 +3,13 @@
  * http://stackoverflow.com/a/28176509/863412
  */
 
-
 import javaposse.jobdsl.dsl.DslScriptLoader
 import jenkins.model.*
 import hudson.model.*
 import javaposse.jobdsl.plugin.JenkinsJobManagement
 import java.util.logging.Logger
 
+def basePath = '/usr/share/jenkins/ref'
 def pattern = 'default-jobs/**/*.groovy'
 
 /*
@@ -27,7 +27,7 @@ def jm = new JenkinsJobManagement(
 		build.getEnvironment(taskListener),
 		build)
 
-new FileNameFinder().getFileNames('/usr/share/jenkins/ref', pattern).each { String fileName ->
+new FileNameFinder().getFileNames(basePath, pattern).each { String fileName ->
 	println "\nprocessing file: $fileName"
 	File file = new File(fileName)
 	DslScriptLoader.runDslEngine(file.text, jm)
