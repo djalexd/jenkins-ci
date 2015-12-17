@@ -1,6 +1,6 @@
 # Ignore this line
-job-dsl:1.35
-promoted-builds:2.21
+job-dsl:1.41
+promoted-builds:2.24
 jobtemplates:1.0
 git-client
 scm-api

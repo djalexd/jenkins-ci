@@ -50,6 +50,7 @@ COPY jenkins.sh /usr/local/bin/jenkins.sh
 
 # from a derived Dockerfile, can use `RUN plugins.sh active.txt` to setup /usr/share/jenkins/ref/plugins from a support bundle
 COPY plugins.sh /usr/local/bin/plugins.sh
+ADD plugins-local /usr/share/jenkins/ref/plugins-local
 
 ENV JENKINS_TEMP /tmp/jenkins
 
