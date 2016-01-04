@@ -1,6 +1,7 @@
 
-db:
-  image: "djalexd/sonar-db:0.1"
+sonar-db:
+  build: "sonar-db"
+  #image: "djalexd/sonar-db:0.1"
   env_file:
     - ./docker-ci.properties
   ports:
@@ -9,11 +10,12 @@ db:
     - "./data/mysql:/var/lib/mysql"
 
 sonar:
-  image: "djalexd/sonar:0.1"
+  #image: "djalexd/sonar:0.1"
+  build: "sonar"
   ports:
     - "9000:9000"
   links:
-    - db:mysql_sonar_db
+    - sonar-db:mysql_sonar_db
   env_file:
     - ./docker-ci.properties
   volumes:
@@ -21,11 +23,13 @@ sonar:
     - "./data/sonar-extensions:/opt/sonarqube/extensions"
 
 jenkins:
-  image: "djalexd/jenkins:0.1"
+  #image: "djalexd/jenkins:0.1"
+  build: "jenkins"
   ports:
     - "8080:8080"
+    - "50000:50000"
   links:
-    - db:mysql_sonar_db
+    - sonar-db:mysql_sonar_db
     - sonar
   env_file:
     - ./docker-ci.properties
@@ -33,20 +37,26 @@ jenkins:
   #  - "./data/jenkins:/var/jenkins_home"
   #environment:
 
-jenkins_slave:
-  image: "andrewgortonuk/dockerjenkinswithgitbuildagent"
-  links:
-    - jenkins
-  environment:
-    - "JENKINS_USERNAME=admin@payu.ro"
-    - "JENKINS_PASSWORD=12345"
-    - "JENKINS_MASTER=http://jenkins:8080"
-  volumes:
-    - "./data/jenkins-slave:/var/local/maestro-agent/workspace/"
-
+#jenkins_slave:
+#  image: "andrewgortonuk/dockerjenkinswithgitbuildagent"
+#  links:
+#    - jenkins
+#  environment:
+#    - "JENKINS_USERNAME=admin@payu.ro"
+#    - "JENKINS_PASSWORD=12345"
+#    - "JENKINS_MASTER=http://jenkins:8080"
+#  volumes:
+#    - "./data/jenkins-slave:/var/local/maestro-agent/workspace/"
+#
 artifactory:
-  image: "djalexd/artifactory-oss:0.1"
+#  image: "djalexd/artifactory-oss:0.1"
+  build: "artifactory"
   ports:
     - "8081:8081"
+  volumes:
+    - "./data/artifactory-data:/var/opt/jfrog/artifactory/data"
+    - "./data/artifactory-logs:/var/opt/jfrog/artifactory/logs"
+    - "./data/artifactory-backup:/var/opt/jfrog/artifactory/backup"
+    - "./data/artifactory-etc:/var/opt/jfrog/artifactory/etc"
   env_file:
     - ./docker-ci.properties

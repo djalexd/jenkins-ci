@@ -11,9 +11,10 @@
           <id>2c1fa93e-c1fd-407c-b771-aa724d20ffa6</id>
           <description>jenkins ci templates</description>
           <username>jenkins-ci-templates</username>
-          <passphrase/>
-          <privateKeySource class="com.cloudbees.jenkins.plugins.sshcredentials.impl.BasicSSHUserPrivateKey$FileOnMasterPrivateKeySource">
-            <privateKey>-----BEGIN RSA PRIVATE KEY-----
+          <passphrase>Xo2sW8qOfblO2+7g92gJCwwUfXGNYPLpKg8mjvJrGLQ=</passphrase>
+          <privateKeySource class="com.cloudbees.jenkins.plugins.sshcredentials.impl.BasicSSHUserPrivateKey$DirectEntryPrivateKeySource">
+            <privateKey>
+-----BEGIN RSA PRIVATE KEY-----
 MIIEowIBAAKCAQEAtoFcdGoGU9S5uTffvm9SfRkg5rFIMa44PwpjEKixyYIs4nKN
 A1TfSjSI1jCoLn5BGjCzCi+cqlHMHBpeBGGWLxYvcE2a4085ZifoMNzOEkxuODB5
 lO1ARlcs7Yyg4+1xAsbT7vl5vMnDsc3FE7xbH8/YviwSI8xN3eOoSyx2RWCq6Lya
@@ -40,7 +41,7 @@ Yc8TGQKBgGWOCEhPwkuMIKDE0ROH3+uWLlnH5RZgPCsBRH1wqocnEP/PVl80zNUj
 AKOocH8Me8mqUssQScmvv2c7cOs0m/31vH6gvzRkBKbMlJ/TIVTgqvNI5dTypjZN
 QXE8z1u7CdWyUgiNuwrVUBP9gbRALVDCcndNp+qP7+NRsRwTZ04J
 -----END RSA PRIVATE KEY-----
-</privateKey>
+            </privateKey>
           </privateKeySource>
         </com.cloudbees.jenkins.plugins.sshcredentials.impl.BasicSSHUserPrivateKey>
       </java.util.concurrent.CopyOnWriteArrayList>

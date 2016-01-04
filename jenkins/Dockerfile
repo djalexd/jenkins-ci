@@ -72,16 +72,14 @@ ADD sonar.properties $JENKINS_REF/sonar.properties
 RUN /usr/local/bin/plugins.sh $JENKINS_REF/jenkins-plugins.txt
 
 # ssh configuration
-ADD config/.ssh $JENKINS_TEMP/.ssh
+#ADD config/.ssh $JENKINS_TEMP/.ssh
 
 # Shared folder, we cannot modify permissions.
-USER root
-RUN chown -R jenkins $JENKINS_TEMP/.ssh
-RUN chmod 500 $JENKINS_TEMP/.ssh/jenkins-ci
-USER jenkins
+#USER root
+#RUN chown -R jenkins $JENKINS_TEMP/.ssh
+#RUN chmod 500 $JENKINS_TEMP/.ssh/jenkins-ci
+#USER jenkins
 
-ADD config/credentials.xml.tpl $JENKINS_TEMP/credentials.xml
+ADD config/credentials.xml.tpl $JENKINS_HOME/credentials.xml
 
-ENTRYPOINT cp -ra $JENKINS_TEMP/* $JENKINS_TEMP/.ssh $JENKINS_HOME/ \
-           && \
-           /bin/tini -- /usr/local/bin/jenkins.sh
+ENTRYPOINT /bin/tini -- /usr/local/bin/jenkins.sh

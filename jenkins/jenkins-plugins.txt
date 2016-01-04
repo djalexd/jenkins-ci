@@ -16,6 +16,7 @@ build-pipeline-plugin
 analysis-core
 jquery:1.7.2-1
 token-macro:1.9
+credentials:1.24
 
 # Google Login Plugin	 Pending
 # OAuth Credentials plugin	 Pending
